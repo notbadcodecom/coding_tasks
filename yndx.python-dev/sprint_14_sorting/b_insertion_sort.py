@@ -27,7 +27,7 @@ def insertion_sort(n, data):
     for i in range(1, n):
         insertion_elem = data[i]
         j = i - 1
-        while j >= 0 and insertion_elem < data[j] :
+        while j >= 0 and insertion_elem < data[j]:
             data[j + 1] = data[j]
             j -= 1
         data[j + 1] = insertion_elem

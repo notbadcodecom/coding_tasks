@@ -21,10 +21,12 @@
 # для которых можно хранить копии в этих датацентрах.
 
 def get_max_photocopy(data, count=0):
-    data = sorted(data, reverse=True)
     last = len(data) - 1
-    while len(data) > 1 and data[0] >= data[1]:
+    while len(data) > 2:
         data = sorted(data, reverse=True)
+        while data[last] == 0 and len(data) > 2:
+            data.pop()
+            last -= 1
         step = data[0] - data[1]
         if step == 0:
             step = 1
@@ -33,11 +35,13 @@ def get_max_photocopy(data, count=0):
         data[0] -= step
         data[last] -= step
         count += step
-        if data[last] == 0:
-            data.pop()
-            last -= 1
+    if len(data) == 2:
+        if data[0] > data[1]:
+            count += data[1]
+        else:
+            count += data[0]
     return count
-
 
 n = int(input())
 print(get_max_photocopy([int(i) for i in input().split(' ')]))
+
