@@ -31,33 +31,22 @@ class Participant:
         data = data.split(' ')
         self.score = sum([int(i) for i in data[1:] if int(i) > 0])
         self.name = data[0]
-        self.rule = self.check_cheater(self.name)
+        self.rule = set('kondratiy').issubset(self.name)
         self.pos = pos
-
-    def check_cheater(self, name):
-        cheat_code = 'kondratiy'
-        counter = {}
-        for char in name:
-            counter[char] = counter.get(char, 0) + 1
-        for char in cheat_code:
-            counter[char] = counter.get(char, 0) - 1
-            if counter[char] < 0:
-                return True
-        return False
 
     def __gt__(self, other):
         if self.rule and other.rule:
+            return self.pos > other.pos
+        elif not self.rule and not other.rule:
             if self.score == other.score:
                 if self.name == other.name:
                     return self.pos > other.pos
                 return self.name < other.name
             return self.score > other.score
         elif self.rule and not other.rule:
-            return False
-        elif not self.rule and other.rule:
             return True
-        elif not self.rule and not other.rule:
-            return self.pos > other.pos
+        elif not self.rule and other.rule:
+            return False
 
     def __repr__(self):
         return self.data
@@ -75,8 +64,7 @@ def heapify(array, n, i):
         array[i], array[root] = array[root], array[i]
         heapify(array, n, root)
 
-
-def heap_sort(array, n):
+def heapsort(array, n):
     for i in range(n, -1, -1):
         heapify(array, n, i)
     for i in range(n - 1, 0, -1):
@@ -86,10 +74,8 @@ def heap_sort(array, n):
 
 n = int(input())
 heap = []
-for i in range(n):
-    heap.append(Participant(input(), i))
-
-heap_sort(heap, n)
-
+for pos in range(n):
+    heap.append(Participant(input(), pos))
+heapsort(heap, n)
 for elem in heap:
     print(elem)
