@@ -27,10 +27,19 @@
 users_m = [int(i) for i in input().split(' ')]
 m = int(input())
 k = int(input())
-users_k= [int(i) for i in input().split(' ')]
+users_k = [int(i) for i in input().split(' ')]
 
-for i in range(m + k):
+def merge(users_m, users_k, m, k, j=0, i=0):
+    while i < (m + k) and j < k:
+        if users_k[j] <= users_m[i]:
+            users_m.pop()
+            users_m.insert(i, users_k[j])
+            j += 1
+        elif not users_m[i]:
+            users_m[i] = users_k[j]
+            j += 1
+        i += 1
+    return users_m
 
-
-print(*users_m)
+print(*merge(users_m, users_k, m, k))
 
