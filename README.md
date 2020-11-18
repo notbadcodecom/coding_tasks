@@ -1,4 +1,4 @@
-# Solutions of coding tasks:
+# Solutions for coding tasks:
 
 > Public task for admission to HeadHunter programmers school 2020 (http://school.hh.ru)
 >> checkup_hh_2020
